@@ -8,8 +8,8 @@ var dataSet = [
   { year: 2024, billions: 523 },
 ];
 
-// Create the bar chart function
-function createBarChart(dataSet) {
+// Create the line chart function
+function createLineChart(dataSet) {
   // Define SVG dimensions and padding
   var w = 800;
   var h = 500;
@@ -24,14 +24,16 @@ function createBarChart(dataSet) {
 
   // Define scales
   var xScale = d3
-    .scaleBand()
-    .domain(
-      dataSet.map(function (d) {
+    .scaleLinear()
+    .domain([
+      d3.min(dataSet, function (d) {
         return d.year;
-      })
-    )
-    .range([padding, w - padding])
-    .padding(0.1);
+      }),
+      d3.max(dataSet, function (d) {
+        return d.year;
+      }),
+    ])
+    .range([padding, w - padding]);
 
   var yScale = d3
     .scaleLinear()
@@ -43,25 +45,41 @@ function createBarChart(dataSet) {
     ])
     .range([h - padding, padding]);
 
-  // Create bars with tooltips, transitions, and data point labels
-  svg
-    .selectAll("rect")
-    .data(dataSet)
-    .enter()
-    .append("rect")
-    .attr("x", function (d) {
+  // Define the line function
+  var line = d3
+    .line()
+    .x(function (d) {
       return xScale(d.year);
     })
-    .attr("y", function (d) {
+    .y(function (d) {
+      return yScale(d.billions);
+    });
+
+  // Append the line to the SVG
+  svg
+    .append("path")
+    .datum(dataSet)
+    .attr("fill", "none")
+    .attr("stroke", "steelblue")
+    .attr("stroke-width", 2)
+    .attr("d", line);
+
+  // Create circles for data points
+  svg
+    .selectAll("circle")
+    .data(dataSet)
+    .enter()
+    .append("circle")
+    .attr("cx", function (d) {
+      return xScale(d.year);
+    })
+    .attr("cy", function (d) {
       return yScale(d.billions);
     })
-    .attr("width", xScale.bandwidth())
-    .attr("height", function (d) {
-      return h - padding - yScale(d.billions);
-    })
-    .style("fill", "steelblue")
+    .attr("r", 5)
+    .attr("fill", "steelblue")
     .on("mouseover", function (event, d) {
-      d3.select(this).transition().duration(100).style("fill", "orange");
+      d3.select(this).attr("r", 8).attr("fill", "orange");
       var tooltip = d3.select("#tooltip");
       tooltip
         .style("opacity", 1)
@@ -74,16 +92,8 @@ function createBarChart(dataSet) {
         );
     })
     .on("mouseout", function () {
-      d3.select(this).transition().duration(600).style("fill", "steelblue");
+      d3.select(this).attr("r", 5).attr("fill", "steelblue");
       d3.select("#tooltip").style("opacity", 0);
-    })
-    .transition()
-    .delay(function (d, i) {
-      return i * 100;
-    })
-    .duration(500)
-    .attr("y", function (d) {
-      return yScale(d.billions);
     });
 
   // Create x-axis
@@ -91,7 +101,9 @@ function createBarChart(dataSet) {
     .append("g")
     .attr("class", "x-axis")
     .attr("transform", "translate(0," + (h - padding) + ")")
-    .call(d3.axisBottom(xScale));
+    .call(
+      d3.axisBottom(xScale).ticks(dataSet.length).tickFormat(d3.format("d"))
+    );
 
   // Create y-axis
   svg
@@ -113,5 +125,5 @@ function createBarChart(dataSet) {
   d3.select("#chartd1").append("div").attr("id", "tooltip").style("opacity", 0);
 }
 
-// Call the createBarChart function with the new dataset
-createBarChart(dataSet);
+// Call the createLineChart function with the dataset
+createLineChart(dataSet);

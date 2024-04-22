@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Data Visualisation" />
+    <meta name="keywords" content="HTML, CSS, D3" />
+    <meta name="author" content="Chung Bao An Nguyen" />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <title>OECD HEALTH 2023</title>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <h3>COVID-19 HEALTH</h3>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li class="dropdown">
+            <a href="#visualization1" class="dropbtn">Visualizations</a>
+            <div class="dropdown-content">
+              <a href="#visualization1">Mental health rate</a>
+              <a href="#visualization2">World wide Digital Health rate</a>
+              <a href="#visualization3">Visualization 3</a>
+            </div>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!--HOME -->
+    <section id="home">
+      <h1>Covid-19 affection in the new world</h1>
+      <p>
+        In recent years, the global concern for healthcare has spurred
+        significant advancements in health research and techniques aimed at
+        disease prevention. However, the COVID-19 pandemic of 2021-2023 brought
+        widespread disruptions, with prolonged periods of isolation, economic
+        downturns, and devastating loss of lives and livelihoods. This cascade
+        of challenges took a toll on both physical and mental health. Research
+        by Shanice Harris in 2023 revealed a concerning rise in anxiety and
+        depression, particularly during COVID-19 surges, affecting over 3
+        million adults aged 18 to 59. Despite these setbacks, there have been
+        notable strides in health science and record-keeping systems, empowering
+        individuals to better manage their health and seek equilibrium.
+        Additionally, the OECD Health Statistics for 2023 offer comprehensive
+        insights into the health status of OECD countries, providing valuable
+        perspectives amid ongoing global health challenges.
+      </p>
+    </section>
+
+    <!--About -->
+    <section id="about">
+      <div class="team-info">
+        <h2>Our team</h2>
+      </div>
+      <div id="student1">
+        <p>Chung Bao An Nguyen - 103485260 <br />Student of Computer Science</p>
+      </div>
+      <div id="student2">
+        <p>Duc Anh Huu Le - 103488418 <br />Student of Computer Science</p>
+      </div>
+    </section>
+
+    <!-- Visualise -->
+    <main>
+      <!-- Data 1 -->
+      <section id="visualization1">
+        <div>
+          <h1>
+            Depression rate of OECD countries before and after COVID-19 pandemic
+          </h1>
+          <h2>Information concept:</h2>
+          <p>
+            The "Health at a Glance 2023" report delivers a stark portrayal of
+            the depression rates across 14 OECD countries, shedding light on the
+            profound impact of the COVID-19 pandemic on global mental health.
+            Through visually compelling bar and pie charts, the report
+            highlights the significant shifts in depression rates from 2019 to
+            2020, offering a sobering insight into the pandemic's toll on mental
+            well-being. These findings underscore the critical importance of
+            addressing depression amidst the ongoing challenges of COVID-19. As
+            societies grapple with the aftermath of the pandemic, prioritizing
+            mental health support and interventions is paramount in fostering
+            resilience and facilitating recovery on a global scale.
+          </p>
+        </div>
+        <div class="container">
+          <p id="chart"></p>
+          <input
+            type="range"
+            min="2019"
+            max="2020"
+            value="2020"
+            step="1"
+            id="year-slider"
+          />
+          <button id="b2">Comparing</button>
+          <button id="b1">Average rate</button>
+          <br />
+          <a
+            href="https://www.oecd-ilibrary.org/sites/7a7afb35-en/1/3/3/10/index.html?itemId=/content/publication/7a7afb35-en&_csp_=6cf33e24b6584414b81774026d82a571&itemIGO=oecd&itemContentType=book"
+            >Data Source: Health at a Glance 2023: OECD indicators</a
+          >
+        </div>
+        <div>
+          <p>
+            The period spanning 2019 to 2020 witnessed a staggering increase in
+            depression rates globally, paralleling the onset of the COVID-19
+            pandemic. In 2019, the average depression rate stood at
+            approximately 7.8%, a figure that surged dramatically to around
+            18.5% by 2020. This sharp escalation underscores the pandemic's
+            profound impact on mental well-being. Countries like the United
+            States, Mexico, Greece, Italy, and Spain experienced significant
+            spikes in depression rates, more than doubling from 2019 to 2020.
+            Challenges in managing the pandemic, including high infection rates,
+            overwhelmed healthcare systems, economic instability, and social
+            disruption, exacerbated mental health vulnerabilities.
+          </p>
+          <p>
+            Social isolation emerged as a critical driver of depressive
+            symptoms, exacerbated by lockdown measures and social distancing
+            protocols. Economic uncertainty fueled stress and anxiety,
+            particularly in countries like the United States, Mexico, and Japan,
+            where job losses and financial strain were prevalent.
+          </p>
+          <p>
+            Disparities in access to mental health services widened during the
+            pandemic, amplifying existing inequalities. Fear of contracting
+            COVID-19 and uncertainties surrounding its consequences further
+            contributed to heightened levels of anxiety and depressive symptoms
+            globally.
+          </p>
+          <p>
+            Addressing these challenges demands comprehensive interventions
+            prioritizing mental health support, reducing social isolation, and
+            mitigating the economic impact of the pandemic to foster resilience
+            and well-being in affected populations.
+          </p>
+        </div>
+      </section>
+
+      <!-- Data 2 -->
+      <section id="visualization2">
+        <div>
+          <h1>
+            Digital Health: Pioneering Solutions Amidst the Global Pandemic
+          </h1>
+          <p>
+            Amidst the challenges of COVID-19, digital health surged forward as
+            a vital solution. Telemedicine, contact tracing apps, and virtual
+            consultations became essential tools, transforming healthcare
+            delivery. This rapid shift highlighted the resilience of the
+            healthcare sector and paved the way for a future where digital
+            innovations play a central role in enhancing healthcare
+            accessibility and effectiveness worldwide.
+          </p>
+        </div>
+        <div class="container">
+          <p id="chartd1"></p>
+          <a
+            href="https://www.statista.com/outlook/hmo/digital-health/worldwide"
+            >Data Source: Digital Health Worldwide</a
+          >
+        </div>
+        <div>
+          <p>
+            The provided digital health data paints a compelling picture of the
+            evolving landscape of healthcare technology and investment. Over the
+            period from 2019 to 2024, the data reveals a consistent and
+            substantial increase in healthcare expenditure dedicated to digital
+            health initiatives. This upward trajectory underscores a growing
+            recognition of the importance of technology in healthcare delivery
+            and management.
+          </p>
+          <p>
+            The data highlights a significant year-over-year growth rate in
+            healthcare spending, indicating a rising priority placed on digital
+            health solutions. For example, between 2019 and 2020, there was a
+            notable surge in expenditure from $175 billion to $216 billion. This
+            steep increase suggests a strategic response to emerging healthcare
+            challenges, including those posed by the COVID-19 pandemic.
+          </p>
+          <p>
+            The continued growth in healthcare expenditure, reaching $523
+            billion by 2024, reflects a sustained commitment to advancing
+            healthcare through technological innovation. This investment
+            demonstrates a proactive approach to addressing healthcare
+            challenges and leveraging digital solutions to improve patient
+            outcomes and enhance accessibility. Furthermore, the data
+            underscores the transformative potential of digital health
+            technologies in shaping the future of healthcare delivery. By
+            investing in digital health initiatives, healthcare systems aim to
+            bolster resilience, adaptability, and efficiency in responding to
+            evolving patient needs and emerging healthcare trends.
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>&copy; Data visualization COS300045</p>
+      <p>Wednesday 10:30am - 12:30am</p>
+    </footer>
+
+    <script src="data1.js"></script>
+    <script src="data2.js"></script>
+    <!-- Depression rate script -->
+  </body>
+</html>

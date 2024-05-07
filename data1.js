@@ -131,7 +131,7 @@ d3.csv("Book1.csv").then(function (data) {
   }
 
   // Stacked bar function
-  function stackedBar(data, selectedYear) {
+  function stackedBar(data) {
     // Clear existing SVG
     d3.select("#chart svg").remove();
 
@@ -276,7 +276,7 @@ d3.csv("Book1.csv").then(function (data) {
       .text("Depression rate in 2019 and 2020");
   }
 
-  //butotn event
+  //button event
   d3.select("#b2").on("click", function () {
     stackedBar(data, "2020"); // You can change the default selected year if needed
   });

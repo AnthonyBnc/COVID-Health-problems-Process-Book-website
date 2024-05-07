@@ -8,5 +8,5 @@ For the first database, we want to focus on how the COVID pandemic impacts human
 The second database is the digital health investment of the world (2019-2024). 
 We want to focus on how humans face that impact for the second database. By the investment in digital health worldwide.
 
-The third database is the total expenditure, in USD of the world (2019-2024).
-We want to explore the impact of Covid on the world's economy. 
+The third database is the unemployment rate, percenage of labour force of the world (2019-2024).
+We want to explore the impact of Covid on the world's job market. 

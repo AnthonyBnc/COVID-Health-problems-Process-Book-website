@@ -11,8 +11,8 @@ function createGroupedBarChart(dataset, years) {
   // Set the dimensions of the graph
   var w = 800;
   var h = 500;
-  var padding = 100;
-  var legendWidth = 20;
+  var padding = 40;
+  var legendWidth = 10;
   var legendHeight = 10;
 
   // Append the svg object to the body of the page
@@ -24,7 +24,7 @@ function createGroupedBarChart(dataset, years) {
     .append("g");
 
   // Create scale
-  var color = d3
+  var colorLine = d3
     .scaleOrdinal()
     .range([
       "#115f9a",
@@ -36,6 +36,21 @@ function createGroupedBarChart(dataset, years) {
       "#c9e52f",
       "#d0ee11",
       "#d0f400",
+    ]);
+
+  var colorChart = d3
+    .scaleOrdinal()
+    .range([
+      "#e60049",
+      "#0bb4ff",
+      "#50e991",
+      "#e6d800",
+      "#9b19f5",
+      "#ffa300",
+      "#dc0ab4",
+      "#b3d4ff",
+      "#bd7ebe",
+      "#00bfa0",
     ]);
 
   var x0 = d3
@@ -68,13 +83,27 @@ function createGroupedBarChart(dataset, years) {
     .attr("transform", "translate(0," + (h - padding) + ")")
     .call(xAxis)
     .attr("text-anchor", "middle")
-    .attr("font-size", "6px");
+    .attr("font-size", "10px")
+    .selectAll("text")
+    .attr("transform", "rotate(-45)")
+    .attr("text-anchor", "end")
+    .attr("dx", "-.8em")
+    .attr("dy", ".15em");
 
   svg
     .append("g")
     .attr("class", "y axis")
     .attr("transform", "translate(" + padding + ",0)")
     .call(yAxis);
+
+  svg
+    .append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0)
+    .attr("x", 0 - h / 2)
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Percentage of labour force");
 
   // Create bars
   svg
@@ -92,17 +121,28 @@ function createGroupedBarChart(dataset, years) {
     .attr("y", (d) => y(d.value))
     .attr("width", x1.bandwidth())
     .attr("height", (d) => h - padding - y(d.value))
-    .attr("fill", (d) => color(d.year));
+    .attr("fill", (d) => colorChart(d.year))
+    .on("mouseover", function (event, d) {
+      var xPosition =
+        parseFloat(d3.select(this).attr("x")) + x0.bandwidth() / 2;
+      var yPosition = parseFloat(d3.select(this).attr("y")) + padding;
 
-  // Create title
-  svg
-    .append("text")
-    .attr("x", w / 2)
-    .attr("y", 0 - padding)
-    .attr("text-anchor", "middle")
-    .attr("font-size", "16px")
-    .attr("text-decoration", "underline")
-    .text("Unemployment Rate, Percentage of labour force");
+      Bar.append("text")
+        .attr("id", "tooltip")
+        .attr("x", xPosition)
+        .attr("y", yPosition)
+        .attr("text-anchor", "middle")
+        .attr("font-family", "san-serif")
+        .attr("font-size", "20px")
+        .attr("fill", "black")
+        .attr("font-weight", "bold")
+        .attr("fill", "black")
+        .text(d.value);
+    })
+    .append("title")
+    .text(function (d) {
+      return d.value;
+    });
 
   // Create legend
   var legend = svg
@@ -120,21 +160,32 @@ function createGroupedBarChart(dataset, years) {
     .data(legendData)
     .enter()
     .append("rect")
-    .attr("x", 0)
+    .attr("x", -padding)
     .attr("y", (d, i) => i * (legendHeight + 5))
     .attr("width", legendWidth)
     .attr("height", legendHeight)
-    .attr("fill", color);
+    .attr("fill", colorChart);
 
   legend
     .selectAll("text")
     .data(legendData)
     .enter()
     .append("text")
-    .attr("x", legendWidth + 10)
+    .attr("x", legendWidth - (padding - 2))
     .attr("y", (d, i) => i * (legendHeight + 5) + legendHeight / 2)
     .attr("dy", "0.35em")
     .text((d) => d);
+
+  // Create title
+  svg
+    .append("text")
+    .attr("x", w / 2)
+    .attr("y", padding - 20)
+    .attr("text-anchor", "middle")
+    .attr("font-size", "20px")
+    .attr("font-weight", "bold")
+    .text("Unemployment Rate in OECD countries");
+
 }
 
 window.onload = init;

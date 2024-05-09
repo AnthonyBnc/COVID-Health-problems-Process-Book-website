@@ -82,11 +82,13 @@ function createLineChart(dataSet) {
       d3.select(this).attr("r", 8).attr("fill", "orange");
       var tooltip = d3.select("#tooltip");
       tooltip
+        .style("left", event.pageX + 20 + "px")
+        .style("top", event.pageY - 1 + "px")
         .style("opacity", 1)
         .html(
           "Year: " +
             d.year +
-            "<br>Digital health Spent: " +
+            "<br>Digital Health Spent: " +
             d.billions +
             " Billions"
         );
@@ -122,7 +124,20 @@ function createLineChart(dataSet) {
     .text("Digital Health Expenditure");
 
   // Add tooltip element
-  d3.select("#chartd1").append("div").attr("id", "tooltip").style("opacity", 0);
+  d3.select("#chartd1")
+    .append("div")
+    .attr("id", "tooltip")
+    .style("position", "absolute")
+    .style("text-align", "center")
+    .style("width", "120px")
+    .style("height", "50px")
+    .style("padding", "2px")
+    .style("font", "12px sans-serif")
+    .style("background", "white")
+    .style("border", "0px")
+    .style("border-radius", "8px")
+    .style("pointer-events", "none")
+    .style("opacity", 0);
 }
 
 // Call the createLineChart function with the dataset

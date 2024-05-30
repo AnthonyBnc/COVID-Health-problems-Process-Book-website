@@ -1,229 +1,238 @@
 /*Body*/
 body {
-    background-color: #f9f9f9;
-  }
-  
-  /* NAV */
-  header,
-  nav {
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Style header */
-  header {
-    background-color: #333;
-    color: aliceblue;
-    padding: 10px 20px; /* corrected syntax for padding */
-    display: flex;
-    justify-content: space-between;
-    position: relative;
-    top: 0%;
-    z-index: 1000;
-    position: sticky;
-  }
-  
-  /* Style the navigation links */
-  nav ul {
-    list-style: none;
-  }
-  
-  nav ul li {
-    display: inline-flex;
-    margin-right: 20px;
-    margin-left: 20px;
-  }
-  
-  nav ul li a {
-    color: aliceblue;
-    text-decoration: none;
-  }
-  
-  nav ul li a:hover {
-    text-decoration: underline;
-    background-color: #3e8e41;
-  }
-  
-  /* header dropdown */
-  .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-    z-index: 1; /* Set z-index to 1 to ensure it's above other content */
-    right: 1px;
-  }
-  
-  .dropdown-content a {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-  }
-  
-  .dropdown-content a:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .dropdown:hover .dropbtn {
-    background-color: #3e8e41;
-  }
-  
-  /* Footer */
-  footer {
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-  }
-  
-  /* HOME Section */
-  #home {
-    text-align: center;
-    padding: 50px;
-  }
-  
-  #home h1 {
-    font-size: 2.5em;
-    color: #333;
-  }
-  
-  #home p {
-    font-size: 1.1em;
-    color: #666;
-    line-height: 1.6;
-    margin: 20px auto;
-    max-width: 800px;
-  }
-  
-  /* About Section */
-  #about {
-    padding: 50px 20px;
-    margin: 0 auto;
-    max-width: 900px;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .team-info {
-    display: flex;
-    text-align: center;
-    background: #f4f5f6;
-  }
-  
-  #student1,
-  #student2 {
-    width: 50%;
-    margin: 0 0 0 20px;
-  }
-  
-  #about h2 {
-    font-size: 2em;
-    color: #555;
-  }
-  
-  #student1 p,
-  #student2 p {
-    font-size: 1.2em;
-    color: #666;
-    margin-bottom: 20px;
-  }
-  
-  .student_image {
-    padding: 6px;
-    border-radius: 50%;
-    object-fit: cover;
-    width: 250px;
-    height: 250px;
-  }
-  
-  
-  #student1 p strong,
-  #student2 p strong {
-    color: #333;
-    font-weight: bold;
-  }
-  
-  #student1 p span,
-  #student2 p span {
-    color: #777;
-    font-style: italic;
-  }
-  
-  /* Button design */
-  button {
-    padding: 10px 20px;
-    cursor: pointer;
-    border-width: 5px;
-    border-radius: 5px;
-    font-size: 15px;
-    font-weight: bold;
-    text-transform: uppercase;
-    margin: 5px;
-  }
-  
-  /* Visualization Section */
-  #visualization1,
-  #visualization2,
-  #visualization3 {
-    background-color: #fff;
-    padding: 50px;
-    margin: 20px auto;
-    max-width: 800px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  #visualization1 h2,
-  #visualization2 h2 {
-    font-size: 1.2em;
-    color: #555;
-    margin-bottom: 10px;
-  }
-  
-  #visualization1 p,
-  #visualization2 p,
-  #visualization3 p {
-    font-size: 1em;
-    color: #777;
-    line-height: 1, 6;
-  }
-  
-  #chart svg,
-  #chartd1 svg {
-    width: 100%;
-    height: auto;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  /* Visualization of data2 Section */
-  .tooltip {
-    position: absolute;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    font-size: 14px;
-    pointer-events: none; /* This ensures that the tooltip doesn't block mouse events */
-    opacity: 0; /* Initially hidden */
-  }
-  
-  .tooltip.visible {
-    opacity: 1; /* Make tooltip visible on hover */
-  }
-  
+  background-color: #f9f9f9;
+}
+
+/* NAV */
+header,
+nav {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style header */
+header {
+  background-color: #333;
+  color: aliceblue;
+  padding: 10px 20px; /* corrected syntax for padding */
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  top: 0%;
+  z-index: 1000;
+  position: sticky;
+}
+
+/* Style the navigation links */
+nav ul {
+  list-style: none;
+}
+
+nav ul li {
+  display: inline-flex;
+  margin-right: 20px;
+  margin-left: 20px;
+}
+
+nav ul li a {
+  color: aliceblue;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+  background-color: #3e8e41;
+}
+
+/* header dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  z-index: 1; /* Set z-index to 1 to ensure it's above other content */
+  right: 1px;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+.dropdown-content a:hover {
+  background-color: #f1f1f1;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: #3e8e41;
+}
+
+/* Footer */
+footer {
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  padding: 10px 0;
+}
+
+/*        HOME Section        */
+#home {
+  text-align: center;
+  padding: 50px;
+}
+
+#home h1 {
+  font-size: 2.5em;
+  color: #333;
+}
+
+#home p {
+  font-size: 1.1em;
+  color: #666;
+  line-height: 1.6;
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/*              About Section           */
+#about {
+  padding: 50px 20px;
+  margin: 0 auto;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.team-info {
+  display: flex;
+  text-align: center;
+  background: #f4f5f6;
+}
+
+#student1,
+#student2 {
+  width: 50%;
+  margin: 0 0 0 20px;
+}
+
+#about h2 {
+  font-size: 2em;
+  color: #555;
+}
+
+#student1 p,
+#student2 p {
+  font-size: 1.2em;
+  color: #666;
+  margin-bottom: 20px;
+}
+
+.student_image {
+  padding: 6px;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 250px;
+  height: 250px;
+}
+
+#student1 p strong,
+#student2 p strong {
+  color: #333;
+  font-weight: bold;
+}
+
+#student1 p span,
+#student2 p span {
+  color: #777;
+  font-style: italic;
+}
+
+/* Button design */
+button {
+  padding: 10px 20px;
+  cursor: pointer;
+  border-width: 5px;
+  border-radius: 5px;
+  font-size: 15px;
+  font-weight: bold;
+  text-transform: uppercase;
+  margin: 5px;
+}
+
+/* Visualization Section */
+#visualization1,
+#visualization2,
+#visualization3 {
+  background-color: #fff;
+  padding: 50px;
+  margin: 20px auto;
+  max-width: 800px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#visualization1 h2,
+#visualization2 h2 {
+  font-size: 1.2em;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+#visualization1 p,
+#visualization2 p,
+#visualization3 p {
+  font-size: 1em;
+  color: #777;
+  line-height: 1, 6;
+}
+
+#chart svg,
+#chartd1 svg {
+  width: 100%;
+  height: auto;
+}
+
+.container {
+  text-align: center;
+}
+
+/*        Visualization of data2 Section        */
+.tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  pointer-events: none; /* This ensures that the tooltip doesn't block mouse events */
+  opacity: 0; /* Initially hidden */
+}
+
+.tooltip.visible {
+  opacity: 1; /* Make tooltip visible on hover */
+}
+
+/*        Visualisation 3       */
+#legend_section {
+  display: flex;
+}
+
+#legend_section_country, #legend_section_year {
+  display: flex;
+  justify-content: space-around;
+}
+

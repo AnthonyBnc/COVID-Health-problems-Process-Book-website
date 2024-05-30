@@ -10,10 +10,8 @@ function init() {
 function createGroupedBarChart(dataset, years) {
   // Set the dimensions of the graph
   var w = 800;
-  var h = 500;
+  var h = 600;
   var padding = 40;
-  var legendWidth = 10;
-  var legendHeight = 10;
 
   // Append the svg object to the body of the page
   var svg = d3
@@ -24,20 +22,6 @@ function createGroupedBarChart(dataset, years) {
     .append("g");
 
   // Create scale
-  var colorLine = d3
-    .scaleOrdinal()
-    .range([
-      "#115f9a",
-      "#1984c5",
-      "#22a7f0",
-      "#48b5c4",
-      "#76c68f",
-      "#a6d75b",
-      "#c9e52f",
-      "#d0ee11",
-      "#d0f400",
-    ]);
-
   var colorChart = d3
     .scaleOrdinal()
     .range([
@@ -69,7 +53,7 @@ function createGroupedBarChart(dataset, years) {
     .scaleLinear()
     .domain([0, d3.max(dataset, (d) => d3.max(years, (year) => +d[year]))])
     .nice()
-    .rangeRound([h - padding, padding]);
+    .rangeRound([h - padding, padding * 2]);
 
   // Create x axis and y axis
   var xAxis = d3.axisBottom(x0);
@@ -106,12 +90,13 @@ function createGroupedBarChart(dataset, years) {
     .text("Percentage of labour force");
 
   // Create bars
-  svg
+  const bars = svg
     .selectAll(".bar")
     .data(dataset)
     .enter()
     .append("g")
-    .attr("transform", (d) => "translate(" + x0(d.REFERENCE_AREA) + ",0)")
+    .attr("transform", (d) => `translate(${x0(d.REFERENCE_AREA)},0)`)
+    .attr("data-country", (d) => d.REFERENCE_AREA)
     .selectAll("rect")
     .data((d) => years.map((year) => ({ year, value: +d[year] })))
     .enter()
@@ -122,59 +107,10 @@ function createGroupedBarChart(dataset, years) {
     .attr("width", x1.bandwidth())
     .attr("height", (d) => h - padding - y(d.value))
     .attr("fill", (d) => colorChart(d.year))
-    .on("mouseover", function (event, d) {
-      var xPosition =
-        parseFloat(d3.select(this).attr("x")) + x0.bandwidth() / 2;
-      var yPosition = parseFloat(d3.select(this).attr("y")) + padding;
-
-      Bar.append("text")
-        .attr("id", "tooltip")
-        .attr("x", xPosition)
-        .attr("y", yPosition)
-        .attr("text-anchor", "middle")
-        .attr("font-family", "san-serif")
-        .attr("font-size", "20px")
-        .attr("fill", "black")
-        .attr("font-weight", "bold")
-        .attr("fill", "black")
-        .text(d.value);
-    })
-    .append("title")
-    .text(function (d) {
-      return d.value;
-    });
-
-  // Create legend
-  var legend = svg
-    .append("g")
-    .attr("class", "legend")
-    .attr(
-      "transform",
-      "translate(" + (w - padding - legendWidth) + "," + padding + ")"
-    );
-
-  var legendData = years.slice().reverse();
-
-  legend
-    .selectAll("rect")
-    .data(legendData)
-    .enter()
-    .append("rect")
-    .attr("x", -padding)
-    .attr("y", (d, i) => i * (legendHeight + 5))
-    .attr("width", legendWidth)
-    .attr("height", legendHeight)
-    .attr("fill", colorChart);
-
-  legend
-    .selectAll("text")
-    .data(legendData)
-    .enter()
-    .append("text")
-    .attr("x", legendWidth - (padding - 2))
-    .attr("y", (d, i) => i * (legendHeight + 5) + legendHeight / 2)
-    .attr("dy", "0.35em")
-    .text((d) => d);
+    .attr("data-country", (d, i, nodes) =>
+      d3.select(nodes[i].parentNode).attr("data-country")
+    )
+    .attr("data-year", (d) => d.year);
 
   // Create title
   svg
@@ -186,6 +122,136 @@ function createGroupedBarChart(dataset, years) {
     .attr("font-weight", "bold")
     .text("Unemployment Rate in OECD countries");
 
+  // Create Legend section after the chart is rendered
+  createLegendSection(dataset, years);
 }
+
+function createLegendSection(dataset, years) {
+  const legendSection = d3.select("#legend_section");
+
+  createCountryCheckboxes(legendSection, dataset);
+  createYearCheckboxes(legendSection, years);
+}
+
+function createCountryCheckboxes(legendSection, dataset) {
+  const countryCheckboxes = legendSection
+    .append("div")
+    .style("display", "inline-block")
+    .style("vertical-align", "top")
+    .attr("id", "legend_section_country");
+
+  countryCheckboxes.append("strong").text("Countries: ");
+
+  const countryCheckboxGroup = countryCheckboxes.append("div");
+
+  const checkboxes = countryCheckboxGroup
+    .selectAll("div")
+    .data(dataset)
+    .enter()
+    .append("div")
+    .style("display", "inline-block")
+    .style("margin-right", "10px");
+
+  checkboxes
+    .append("input")
+    .attr("type", "checkbox")
+    .attr("checked", true)
+    .attr("id", (d) => `checkbox-${d.REFERENCE_AREA}`)
+    .on("change", toggleCountry);
+
+  checkboxes
+    .append("label")
+    .attr("for", (d) => `checkbox-${d.REFERENCE_AREA}`)
+    .text((d) => d.REFERENCE_AREA);
+}
+
+function createYearCheckboxes(legendSection, years) {
+  const yearCheckboxes = legendSection
+    .append("div")
+    .style("display", "inline-block")
+    .style("vertical-align", "top")
+    .attr("id", "legend_section_year");
+
+  yearCheckboxes.append("strong").text("Years: ");
+
+  const yearCheckboxGroup = yearCheckboxes.append("div");
+
+  const checkboxes = yearCheckboxGroup
+    .selectAll("div")
+    .data(years)
+    .enter()
+    .append("div")
+    .style("display", "inline-block")
+    .style("margin-right", "10px");
+
+  checkboxes
+    .append("input")
+    .attr("type", "checkbox")
+    .attr("checked", true)
+    .attr("id", (d) => `checkbox-${d}`)
+    .on("change", toggleYear);
+
+  checkboxes
+    .append("label")
+    .attr("for", (d) => `checkbox-${d}`)
+    .text((d) => d);
+}
+
+function toggleCountry() {
+  const country = d3.select(this).attr("id").replace("checkbox-", "");
+  const isChecked = d3.select(this).property("checked");
+
+  // // Update scale based on visible data
+  // updateScale();
+
+  // Apply transition to bars
+  d3.selectAll(`.bar[data-country="${country}"]`)
+    .transition()
+    .duration(500)
+    .style("opacity", isChecked ? 1 : 0.01);
+}
+
+function toggleYear() {
+  const year = d3.select(this).attr("id").replace("checkbox-", "");
+  const isChecked = d3.select(this).property("checked");
+
+  // // Update scale based on visible data
+  // updateScale();
+
+  // Apply transition to bars
+  d3.selectAll(`.bar[data-year="${year}"]`)
+    .transition()
+    .duration(500)
+    .style("opacity", isChecked ? 1 : 0.01);
+}
+
+// function updateScale() {
+//   // Get the visible data
+//   const visibleData = dataset.filter((d) => {
+//     const countryCheckbox = d3.select(`#checkbox-${d.REFERENCE_AREA}`);
+//     const yearCheckboxes = years.filter((year) => {
+//       const yearCheckbox = d3.select(`#checkbox-${year}`);
+//       return yearCheckbox.property("checked");
+//     });
+//     return countryCheckbox.property("checked") && yearCheckboxes.length > 0;
+//   });
+
+//   // Recalculate the domain of the y-scale
+//   y.domain([
+//     0,
+//     d3.max(visibleData, (d) =>
+//       d3.max(
+//         years.filter((year) => {
+//           const yearCheckbox = d3.select(`#checkbox-${year}`);
+//           return yearCheckbox.property("checked");
+//         }),
+//         (year) => +d[year]
+//       )
+//     ),
+//   ]).nice();
+
+//   // Update y-axis
+//   d3.select(".y.axis").transition().duration(500).call(yAxis);
+// }
 
 window.onload = init;
